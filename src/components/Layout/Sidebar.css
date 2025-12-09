@@ -19,12 +19,14 @@
     width var(--transition-normal) ease,
     transform var(--transition-normal) ease,
     background-color var(--transition-normal);
-  overflow: hidden;
+  overflow: visible !important; /* Changed from hidden to allow button to be visible outside */
+  clip-path: none !important; /* Ensure no clipping */
 }
 
 /* Collapsed state */
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
+  overflow: visible; /* Ensure button is visible even when collapsed */
 }
 
 /* === MOBILE STATES === */
@@ -57,7 +59,10 @@
   align-items: center;
   justify-content: center;
   transition: all var(--transition-fast);
-  z-index: 10;
+  z-index: 1000; /* Increased to ensure visibility */
+  padding: 0; /* Ensure no padding affects icon positioning */
+  min-width: 40px; /* Prevent shrinking */
+  min-height: 40px;
 }
 
 .sidebar-close-btn:hover {
@@ -69,27 +74,32 @@
 .sidebar-collapse-btn {
   position: absolute;
   top: var(--spacing-md);
-  right: calc(var(--spacing-md) * -1);
-  width: 32px;
-  height: 32px;
-  background: var(--sidebar-background);
-  border: 1px solid var(--border-primary);
+  right: -20px; /* Move button further outside sidebar for better visibility */
+  width: 40px; /* Increased size for better visibility */
+  height: 40px; /* Increased size for better visibility */
+  background: var(--neon-purple); /* More visible background color */
+  border: 2px solid var(--neon-pink); /* More visible border */
   border-radius: 50%;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
+  color: white; /* White icon for better contrast */
+  font-size: 1rem; /* Larger icon */
   cursor: pointer;
   display: none;
   align-items: center;
   justify-content: center;
   transition: all var(--transition-fast);
-  z-index: 10;
-  box-shadow: var(--shadow-md);
+  z-index: 1002; /* Higher z-index to ensure it's above everything */
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5), 0 0 20px rgba(255, 27, 141, 0.3); /* Glowing shadow for visibility */
+  padding: 0; /* Ensure no padding affects icon positioning */
+  min-width: 40px; /* Prevent shrinking */
+  min-height: 40px;
 }
 
 .sidebar-collapse-btn:hover {
-  background: var(--neon-purple);
+  background: var(--neon-pink); /* Change to pink on hover */
+  border-color: var(--neon-purple);
   color: white;
-  transform: scale(1.1);
+  transform: scale(1.15); /* Slightly larger scale */
+  box-shadow: 0 6px 20px rgba(255, 27, 141, 0.6), 0 0 30px rgba(139, 92, 246, 0.4); /* Enhanced glow on hover */
 }
 
 /* Show controls based on screen size */
@@ -102,6 +112,7 @@
 @media (min-width: 769px) {
   .sidebar-collapse-btn {
     display: flex;
+    right: -20px; /* Ensure button is fully visible outside sidebar */
   }
 }
 
@@ -199,6 +210,8 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  min-width: 36px; /* Prevent shrinking */
+  min-height: 36px;
   border-radius: var(--border-radius-sm);
   color: var(--text-secondary);
   background: var(--background-tertiary);
@@ -206,6 +219,7 @@
   text-decoration: none;
   transition: all var(--transition-fast);
   font-size: 1rem;
+  padding: 0; /* Ensure no padding affects icon positioning */
 }
 
 .social-link:hover {
@@ -329,6 +343,10 @@
   font-size: 1.1rem;
   flex-shrink: 0;
   transition: transform var(--transition-fast);
+  min-width: 1.1rem; /* Prevent icon from being cut off */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-link:hover .nav-icon {
@@ -382,6 +400,202 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(-50%) translateX(4px);
+}
+
+/* === SIDEBAR ACTION BUTTONS === */
+.sidebar-actions {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.sidebar.collapsed .sidebar-actions {
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.sidebar-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  padding: 12px 25px; /* Match Button.css padding */
+  border-radius: 8px; /* Match Button.css border-radius */
+  font-size: 1em; /* Match Button.css font-size */
+  font-weight: 600; /* Match Button.css font-weight */
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  min-width: 150px; /* Match Button.css min-width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Match Button.css box-shadow */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-action-btn {
+  justify-content: center;
+  padding: 12px 15px;
+  min-width: auto;
+}
+
+/* Hire Me Now Button - Primary Style */
+.hire-me-btn {
+  background-color: var(--neon-pink); /* Primary button background */
+  color: var(--background-color-dark); /* Primary button text */
+  border: 1px solid var(--neon-pink); /* Primary button border */
+}
+
+.hire-me-btn:hover {
+  background-color: var(--neon-purple); /* Primary hover background */
+  border-color: var(--neon-purple); /* Primary hover border */
+  color: var(--text-color-light); /* Primary hover text */
+  transform: translateY(-3px); /* Primary hover lift */
+  box-shadow: 0 8px 15px var(--neon-purple-faded); /* Primary hover shadow */
+}
+
+.hire-me-btn:active {
+  transform: translateY(0); /* Primary active */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Primary active shadow */
+  background-color: var(--neon-pink); /* Primary active background */
+  border-color: var(--neon-pink);
+}
+
+/* Download CV Button - Secondary Style */
+.download-cv-btn {
+  background-color: transparent; /* Secondary button background */
+  color: var(--neon-green); /* Secondary button text */
+  border: 1px solid var(--neon-green); /* Secondary button border */
+}
+
+.download-cv-btn:hover {
+  background-color: var(--neon-green); /* Secondary hover background */
+  color: var(--background-color-dark); /* Secondary hover text */
+  transform: translateY(-3px); /* Secondary hover lift */
+  box-shadow: 0 8px 15px var(--neon-green-faded); /* Secondary hover shadow */
+}
+
+.download-cv-btn:active {
+  transform: translateY(0); /* Secondary active */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Secondary active shadow */
+  background-color: transparent; /* Secondary active background */
+  color: var(--neon-green);
+}
+
+.action-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  min-width: 1rem; /* Prevent icon from being cut off */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pulse animation for Hire Me button (like the original) */
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 0 var(--neon-pink-faded);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 8px var(--neon-pink-faded);
+  }
+}
+
+.hire-me-btn {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.action-text {
+  flex: 1;
+  text-align: left;
+}
+
+.sidebar.collapsed .action-text {
+  display: none;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.sidebar.collapsed .dropdown-arrow {
+  display: none;
+}
+
+/* CV Dropdown Menu */
+.cv-dropdown-container {
+  position: relative;
+}
+
+.cv-dropdown-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  margin-bottom: var(--spacing-xs);
+  background: var(--background-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  overflow: hidden;
+  animation: slideDown var(--transition-fast) ease-out;
+}
+
+.sidebar.collapsed .cv-dropdown-menu {
+  left: calc(100% + var(--spacing-sm));
+  bottom: auto;
+  top: 0;
+  margin-bottom: 0;
+  margin-left: var(--spacing-sm);
+  min-width: 200px;
+}
+
+.cv-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.cv-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.cv-dropdown-item:hover {
+  background: var(--neon-pink-faded);
+  color: var(--text-primary);
+  padding-left: calc(var(--spacing-md) + 4px);
+}
+
+.cv-dropdown-item svg {
+  font-size: 0.9rem;
+  color: var(--neon-pink);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === SIDEBAR FOOTER === */
@@ -444,6 +658,47 @@
 }
 
 /* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .sidebar-actions {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md); /* More space between buttons on mobile */
+  }
+  
+  .sidebar-action-btn {
+    padding: var(--spacing-lg) var(--spacing-md);
+    font-size: var(--font-size-base);
+    min-height: 48px; /* Touch-friendly button size */
+  }
+  
+  .cv-dropdown-menu {
+    position: fixed;
+    left: var(--spacing-md) !important;
+    right: var(--spacing-md) !important;
+    bottom: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    max-width: calc(100vw - var(--spacing-md) * 2);
+    width: auto;
+    max-height: 50vh; /* Prevent dropdown from being too tall */
+    overflow-y: auto;
+  }
+  
+  /* Ensure icons are visible on mobile */
+  .sidebar-close-btn {
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 44px; /* Larger touch target */
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .nav-icon,
+  .action-icon {
+    font-size: 1.2rem; /* Slightly larger on mobile for visibility */
+  }
+}
+
 @media (max-width: 480px) {
   .sidebar {
     width: 100vw;
@@ -464,6 +719,15 @@
   
   .nav-link {
     padding: var(--spacing-lg) var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+  
+  .sidebar-actions {
+    padding: var(--spacing-md);
+  }
+  
+  .sidebar-action-btn {
+    padding: var(--spacing-lg);
     font-size: var(--font-size-base);
   }
 }

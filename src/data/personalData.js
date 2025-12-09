@@ -45,6 +45,9 @@ const personalData = {
     ],
     cvs: {
       full: '/assets/cvs/mazi-full-cv.pdf',
+      accountant: '/assets/cvs/mazi-accountant-cv.pdf',
+      webDeveloper: '/assets/cvs/mazi-webdev-cv.pdf',
+      dataAnalyst: '/assets/cvs/mazi-dataanalyst-cv.pdf',
     },
   },
 

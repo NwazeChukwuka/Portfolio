@@ -6,8 +6,12 @@
 
 .contact-page {
   padding-top: var(--navbar-height); /* Offset for fixed navbar */
+  padding-bottom: 400px; /* Large padding to account for fixed footer */
   color: var(--text-color);
   background-color: var(--background-color-dark);
+  min-height: calc(100vh - var(--navbar-height)); /* Ensure minimum height */
+  position: relative;
+  z-index: 1; /* Ensure it's below footer */
 }
 
 /* --- Re-using common styles for hero, title, subtitle from other pages --- */
@@ -44,8 +48,11 @@
 /* --- Contact Details & Form Section --- */
 .contact-details-form-section {
   padding-top: 50px;
-  padding-bottom: 80px;
+  padding-bottom: 50px; /* Standard padding */
   background-color: var(--background-color-light);
+  margin-bottom: 0; /* Remove any margin that could cause overflow */
+  position: relative;
+  z-index: 1; /* Ensure it's below footer */
 }
 
 .contact-container {
@@ -216,7 +223,11 @@
     font-size: 1.3em;
   }
   .contact-details-form-section {
-    padding: 60px var(--padding-x-mobile);
+    padding: 60px var(--padding-x-mobile) 50px; /* Standard padding */
+  }
+  
+  .contact-page {
+    padding-bottom: 350px; /* Account for fixed footer on mobile */
   }
   .contact-info h2,
   .contact-form-container h2 {
@@ -257,7 +268,11 @@
 
 @media (max-width: 480px) {
   .contact-details-form-section {
-    padding: 40px var(--padding-x-mobile);
+    padding: 40px var(--padding-x-mobile) 40px; /* Standard padding */
+  }
+  
+  .contact-page {
+    padding-bottom: 300px; /* Account for fixed footer on small mobile */
   }
   .contact-hero-section .page-title {
     font-size: 2.5em;

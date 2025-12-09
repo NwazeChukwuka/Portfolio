@@ -6,37 +6,77 @@
 .footer {
   background: linear-gradient(135deg, var(--footer-background), var(--background-tertiary));
   color: var(--text-secondary);
-  position: relative;
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   border-top: 1px solid var(--border-primary);
+  z-index: 1000; /* High z-index to ensure footer is always on top */
+  clear: both; /* Clear any floats */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1); /* Add shadow above footer */
+  max-height: 50vh; /* Prevent footer from taking too much space */
+  overflow-y: auto; /* Allow scrolling if content is too tall */
+  overflow-x: visible; /* Allow button to be visible outside */
+}
+
+/* Account for sidebar on desktop */
+@media (min-width: 769px) {
+  .footer {
+    left: 280px; /* Sidebar width */
+    width: calc(100% - 280px);
+  }
+  
+  /* Account for collapsed sidebar */
+  .main-layout.sidebar-collapsed .footer {
+    left: 60px; /* Collapsed sidebar width */
+    width: calc(100% - 60px);
+  }
+}
+
+/* On mobile, footer spans full width */
+@media (max-width: 768px) {
+  .footer {
+    left: 0;
+    width: 100%;
+  }
 }
 
 /* Back to top button */
 .back-to-top {
   position: absolute;
-  top: -25px;
+  top: -15px; /* Positioned for optimal visibility */
   right: var(--spacing-xl);
-  width: 50px;
-  height: 50px;
-  background: var(--neon-pink);
+  width: 55px; /* Increased size for better visibility */
+  height: 55px; /* Increased size for better visibility */
+  background: var(--neon-purple); /* More visible background color */
   color: white;
-  border: none;
+  border: 2px solid var(--neon-pink); /* More visible border */
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* Larger icon */
   cursor: pointer;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5), 0 0 20px rgba(255, 27, 141, 0.3); /* Glowing shadow for visibility */
   transition: all var(--transition-fast);
-  z-index: 10;
+  z-index: 1003; /* Higher z-index to ensure it's above everything */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-width: 55px;
+  min-height: 55px;
 }
 
 .back-to-top:hover {
-  background: var(--neon-purple);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-xl);
+  background: var(--neon-pink); /* Change to pink on hover */
+  border-color: var(--neon-purple);
+  color: white;
+  transform: translateY(-5px) scale(1.1); /* More pronounced lift and scale */
+  box-shadow: 0 6px 20px rgba(255, 27, 141, 0.6), 0 0 30px rgba(139, 92, 246, 0.4); /* Enhanced glow on hover */
 }
 
 .back-to-top:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 3px 10px rgba(255, 27, 141, 0.4), 0 0 15px rgba(139, 92, 246, 0.3);
 }
 
 .footer-container {
@@ -381,6 +421,7 @@
   
   .back-to-top {
     right: var(--spacing-lg);
+    top: -15px; /* Positioned for optimal visibility */
   }
 }
 
@@ -433,9 +474,10 @@
   
   .back-to-top {
     right: var(--spacing-md);
-    width: 45px;
-    height: 45px;
-    font-size: 1rem;
+    width: 50px; /* Keep larger size on mobile */
+    height: 50px; /* Keep larger size on mobile */
+    font-size: 1.2rem; /* Larger icon on mobile */
+    top: -14px; /* Positioned for optimal visibility */
   }
 }
 
@@ -482,9 +524,10 @@
   
   .back-to-top {
     right: var(--spacing-sm);
-    width: 40px;
-    height: 40px;
-    font-size: 0.9rem;
+    width: 48px; /* Keep larger size on small mobile */
+    height: 48px; /* Keep larger size on small mobile */
+    font-size: 1.1rem; /* Larger icon */
+    top: -13px; /* Positioned for optimal visibility */
   }
 }
 

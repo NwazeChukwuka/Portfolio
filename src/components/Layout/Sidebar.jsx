@@ -1,11 +1,12 @@
 // src/components/Layout/Sidebar.jsx
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   FaHome, FaCalculator, FaCode, FaChartBar, FaEnvelope,
   FaToolbox, FaQuestionCircle, FaGraduationCap, FaBlog,
   FaLinkedin, FaGithub, FaWhatsapp, FaTimes, FaSun, FaMoon,
-  FaChevronLeft, FaChevronRight, FaFolder, FaUser
+  FaChevronLeft, FaChevronRight, FaFolder, FaUser, FaDownload,
+  FaChevronDown, FaHandshake
 } from 'react-icons/fa';
 import personalData from '../../data/personalData';
 import './Sidebar.css';
@@ -32,6 +33,8 @@ const Sidebar = ({
   const sidebarRef = useRef(null);
   const location = useLocation();
   const { general, contact } = personalData;
+  const [isCvDropdownOpen, setIsCvDropdownOpen] = useState(false);
+  const cvDropdownRef = useRef(null);
 
   // Navigation items configuration
   const navItems = [
@@ -155,6 +158,20 @@ const Sidebar = ({
       }
     }
   }, [isOpen]);
+
+  // Close CV dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cvDropdownRef.current && !cvDropdownRef.current.contains(event.target)) {
+        setIsCvDropdownOpen(false);
+      }
+    };
+
+    if (isCvDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isCvDropdownOpen]);
 
   const handleLinkClick = () => {
     if (isMobile) {
@@ -306,6 +323,86 @@ const Sidebar = ({
           <ul className="nav-menu">
             {navItems.map(renderNavItem)}
           </ul>
+          
+          {/* Action Buttons */}
+          <div className="sidebar-actions">
+            {/* Hire Me Now Button */}
+            <a
+              href="/contact"
+              className="sidebar-action-btn hire-me-btn"
+              onClick={handleLinkClick}
+            >
+              <FaHandshake className="action-icon" />
+              {!isCollapsed && <span className="action-text">Hire Me Now</span>}
+            </a>
+            
+            {/* Download CV Button with Dropdown */}
+            <div className="cv-dropdown-container" ref={cvDropdownRef}>
+              <button
+                className="sidebar-action-btn download-cv-btn"
+                onClick={() => setIsCvDropdownOpen(!isCvDropdownOpen)}
+                aria-expanded={isCvDropdownOpen}
+                aria-haspopup="true"
+              >
+                <FaDownload className="action-icon" />
+                {!isCollapsed && <span className="action-text">Download CV</span>}
+                {!isCollapsed && <FaChevronDown className={`dropdown-arrow ${isCvDropdownOpen ? 'open' : ''}`} />}
+              </button>
+              
+              {isCvDropdownOpen && (
+                <div className="cv-dropdown-menu">
+                  <a
+                    href={general.cvs.full}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cv-dropdown-item"
+                    onClick={() => {
+                      setIsCvDropdownOpen(false);
+                      if (isMobile) onClose();
+                    }}
+                  >
+                    <FaDownload /> Full CV
+                  </a>
+                  <a
+                    href={general.cvs.accountant}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cv-dropdown-item"
+                    onClick={() => {
+                      setIsCvDropdownOpen(false);
+                      if (isMobile) onClose();
+                    }}
+                  >
+                    <FaDownload /> Accountant CV
+                  </a>
+                  <a
+                    href={general.cvs.webDeveloper}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cv-dropdown-item"
+                    onClick={() => {
+                      setIsCvDropdownOpen(false);
+                      if (isMobile) onClose();
+                    }}
+                  >
+                    <FaDownload /> Web Developer CV
+                  </a>
+                  <a
+                    href={general.cvs.dataAnalyst}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cv-dropdown-item"
+                    onClick={() => {
+                      setIsCvDropdownOpen(false);
+                      if (isMobile) onClose();
+                    }}
+                  >
+                    <FaDownload /> Data Analyst CV
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Theme toggle and footer */}

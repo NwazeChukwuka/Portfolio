@@ -8,6 +8,7 @@
 
 .role-page {
   padding-top: var(--navbar-height); /* Offset for fixed navbar */
+  padding-bottom: 400px; /* Large padding to account for fixed footer */
   color: var(--text-color);
   background-color: var(--background-color-dark);
 }
@@ -438,6 +439,7 @@
 @media (max-width: 768px) {
   .role-page {
     padding-top: var(--navbar-height-mobile);
+    padding-bottom: 350px; /* Account for fixed footer on mobile */
   }
   .common-section {
     padding: 60px var(--padding-x-mobile);
@@ -498,6 +500,9 @@
 }
 
 @media (max-width: 480px) {
+  .role-page {
+    padding-bottom: 300px; /* Account for fixed footer on small mobile */
+  }
   .common-section {
     padding: 40px var(--padding-x-mobile);
   }

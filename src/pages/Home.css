@@ -7,7 +7,10 @@
 
 .home-page {
   padding-top: var(--navbar-height); /* Offset for fixed navbar */
+  padding-bottom: 400px; /* Large padding to account for fixed footer */
   color: var(--text-color);
+  position: relative;
+  z-index: 1; /* Ensure it's below footer */
 }
 
 /* --- Common Section Styles --- */
@@ -78,7 +81,7 @@
 /* --- Hero Section --- */
 .hero-section {
   position: relative;
-  padding: 100px var(--padding-x) 80px; /* Adjusted padding */
+  padding: 100px var(--padding-x) 80px; /* Standard padding */
   background: var(--background-color-dark);
   min-height: calc(100vh - var(--navbar-height)); /* Full viewport height minus navbar */
   display: flex;
@@ -86,6 +89,8 @@
   justify-content: center;
   overflow: hidden; /* Hide overflowing background elements */
   text-align: center; /* Default for mobile */
+  margin-bottom: 0; /* Remove any margin that could cause issues */
+  z-index: 1; /* Ensure it's above background but below footer */
 }
 
 .hero-content {
@@ -133,27 +138,206 @@
   margin: 0 auto 30px; /* Center and add bottom margin */
 }
 
+/* Hero Stats Section */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1; /* Ensure it's above background elements but below footer */
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 15px 20px;
+  background: var(--background-color-light);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  min-width: 120px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-color: var(--neon-green);
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--neon-pink);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9em;
+  color: var(--text-color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Hero Actions Row - Contains buttons and social links */
+.hero-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
 .hero-buttons {
   display: flex;
   flex-wrap: wrap; /* Allow buttons to wrap */
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   gap: 20px;
-  margin-bottom: 30px;
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Hire Me Now Button in Hero */
+.hero-hire-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.hero-hire-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px var(--neon-pink-faded);
+}
+
+/* Download CV Button in Hero */
+.hero-cv-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-download-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hero-download-cv-btn:hover {
+  background-color: var(--neon-green);
+  color: var(--background-color-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px var(--neon-green-faded);
+}
+
+.cv-dropdown-arrow {
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+  font-size: 0.9em;
+}
+
+.cv-dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* CV Dropdown Menu */
+.hero-cv-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: var(--background-color-light);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  min-width: 220px;
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeInDown 0.3s ease;
+}
+
+.hero-cv-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.hero-cv-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.hero-cv-dropdown-item:hover {
+  background-color: var(--background-color-dark);
+  color: var(--neon-green);
+  padding-left: 25px;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-social-links {
   display: flex;
-  justify-content: center;
-  gap: 25px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
 }
 
-.hero-social-links a {
+.hero-social-links .social-label {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--text-color-muted);
+  text-align: right;
+}
+
+.hero-social-links .social-icons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.hero-social-links .social-link {
   font-size: 1.8em;
   color: var(--text-color-muted);
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.hero-social-links a:hover {
+.hero-social-links .social-link:hover {
   color: var(--neon-pink);
   transform: translateY(-5px) scale(1.1);
 }
@@ -603,6 +787,44 @@
 @media (max-width: 768px) {
   .home-page {
     padding-top: var(--navbar-height-mobile);
+    padding-bottom: 350px; /* Account for fixed footer on mobile */
+  }
+  
+  .hero-actions-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .hero-social-links {
+    align-items: center;
+    width: 100%;
+  }
+  
+  .hero-social-links .social-label {
+    text-align: center;
+  }
+  
+  .hero-social-links .social-icons {
+    justify-content: center;
+  }
+  
+  .hero-hire-btn,
+  .hero-download-cv-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .hero-cv-dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
   }
   .common-section {
     padding: 60px var(--padding-x-mobile);
@@ -617,7 +839,27 @@
 
   /* Hero Section */
   .hero-section {
-    padding: 80px var(--padding-x-mobile);
+    padding: 80px var(--padding-x-mobile) 100px; /* Increased bottom padding */
+    min-height: auto; /* Remove min-height on mobile to prevent overlap */
+  }
+  
+  /* Hero Stats - Mobile adjustments */
+  .hero-stats {
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .stat-item {
+    min-width: 100px;
+    padding: 12px 15px;
+  }
+  
+  .stat-number {
+    font-size: 2em;
+  }
+  
+  .stat-label {
+    font-size: 0.8em;
   }
   .hero-title {
     font-size: 2.8em;
@@ -672,6 +914,19 @@
 }
 
 @media (max-width: 480px) {
+  .hero-hire-btn,
+  .hero-download-cv-btn {
+    padding: 12px 20px;
+    font-size: 1em;
+  }
+  
+  .hero-cv-dropdown-menu {
+    min-width: 180px;
+  }
+  .home-page {
+    padding-bottom: 300px; /* Account for fixed footer on small mobile */
+  }
+  
   .common-section {
     padding: 40px var(--padding-x-mobile);
   }
@@ -684,7 +939,30 @@
 
   /* Hero Section */
   .hero-section {
-    padding: 60px var(--padding-x-mobile);
+    padding: 60px var(--padding-x-mobile) 80px; /* Increased bottom padding */
+    min-height: auto; /* Remove min-height on small mobile */
+  }
+  
+  /* Hero Stats - Small mobile adjustments */
+  .hero-stats {
+    gap: 10px;
+    margin: 15px 0;
+    flex-direction: column; /* Stack vertically on very small screens */
+    width: 100%;
+  }
+  
+  .stat-item {
+    width: 100%;
+    min-width: auto;
+    padding: 15px;
+  }
+  
+  .stat-number {
+    font-size: 1.8em;
+  }
+  
+  .stat-label {
+    font-size: 0.75em;
   }
   .hero-title {
     font-size: 2.2em;

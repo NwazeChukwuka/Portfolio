@@ -3,8 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   FaLinkedin, FaTwitter, FaGithub, FaResearchgate, 
-  FaEnvelope, FaPhone, FaMapMarkerAlt, FaArrowUp,
-  FaHeart, FaCode, FaCoffee 
+  FaEnvelope, FaPhone, FaMapMarkerAlt, FaArrowUp
 } from 'react-icons/fa';
 import personalData from '../../data/personalData';
 import './Footer.css';
@@ -199,16 +198,6 @@ const Footer = () => {
           <div className="copyright">
             <p>
               &copy; {currentYear} {general.fullName || 'Your Name'}. All rights reserved.
-            </p>
-          </div>
-          
-          <div className="footer-credits">
-            <p>
-              Made with <FaHeart className="heart-icon" /> and <FaCode className="code-icon" /> 
-              {/* , powered by <FaCoffee className="coffee-icon" /> */}
-            </p>
-            <p className="tech-stack">
-              Built with React.js & Modern Web Technologies
             </p>
           </div>
           

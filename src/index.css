@@ -98,6 +98,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--header-height));
+  position: relative;
+  z-index: 1; /* Ensure it's below footer */
 }
 
 .content-wrapper {
@@ -105,7 +107,11 @@ body {
   max-width: var(--max-content-width);
   margin: 0 auto;
   padding: var(--container-padding);
+  padding-bottom: 400px; /* Large padding to account for fixed footer height */
   width: 100%;
+  min-height: calc(100vh - var(--header-height));
+  position: relative;
+  z-index: 1; /* Ensure it's below footer */
 }
 
 /* === TYPOGRAPHY === */
@@ -357,6 +363,7 @@ textarea.form-control {
   
   .content-wrapper {
     padding: var(--container-padding-mobile);
+    padding-bottom: 350px; /* Account for fixed footer on tablet */
   }
 }
 
@@ -367,6 +374,10 @@ textarea.form-control {
   
   .main-content {
     min-height: calc(100vh - var(--header-height-mobile));
+  }
+  
+  .content-wrapper {
+    padding-bottom: 300px; /* Account for fixed footer on mobile */
   }
   
   .section {

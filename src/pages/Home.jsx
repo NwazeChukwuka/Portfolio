@@ -1,5 +1,5 @@
 // src/pages/Home.jsx - Final Corrected Version
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -18,13 +18,15 @@ import TestimonialCarousel from '../components/UI/TestimonialCarousel';
 // Import Icons
 import {
   FaLinkedinIn, FaGithub, FaWhatsapp, FaTwitter, FaFacebookF,
-  FaArrowRight, FaChevronDown
+  FaArrowRight, FaChevronDown, FaDownload, FaHandshake
 } from 'react-icons/fa';
 
 import './Home.css';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isCvDropdownOpen, setIsCvDropdownOpen] = useState(false);
+  const cvDropdownRef = useRef(null);
 
   useEffect(() => {
     AOS.init({
@@ -63,7 +65,7 @@ const Home = () => {
       profilePicture,
       tagline: blendedTitle,
       aboutMe: [shortBio, longBio],
-      cvs,
+      cvs: cvPaths,
     }
   } = personalData;
 
@@ -115,50 +117,98 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="hero-buttons" data-aos="fade-up" data-aos-delay="400">
-              <Button to="/contact" variant="primary" className="pulse-animation">
-                Hire Me Now
-              </Button>
-              <Button
-                href={cvs.full}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="secondary"
-                className="download-cv-btn"
-              >
-                <FaArrowRight className="btn-icon" />
-                Download CV
-              </Button>
-            </div>
+            {/* Hero Action Buttons and Social Links on Same Line */}
+            <div className="hero-actions-row" data-aos="fade-up" data-aos-delay="400">
+              {/* Hero Action Buttons - Left Side */}
+              <div className="hero-buttons">
+                <Button to="/contact" variant="primary" className="hero-hire-btn">
+                  <FaHandshake /> Hire Me Now
+                </Button>
+                
+                <div className="hero-cv-dropdown-container" ref={cvDropdownRef}>
+                  <button
+                    className="hero-download-cv-btn"
+                    onClick={() => setIsCvDropdownOpen(!isCvDropdownOpen)}
+                    aria-expanded={isCvDropdownOpen}
+                    aria-haspopup="true"
+                  >
+                    <FaDownload /> Download CV
+                    <FaChevronDown className={`cv-dropdown-arrow ${isCvDropdownOpen ? 'open' : ''}`} />
+                  </button>
+                  
+                  {isCvDropdownOpen && (
+                    <div className="hero-cv-dropdown-menu">
+                      <a
+                        href={cvPaths.full}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hero-cv-dropdown-item"
+                        onClick={() => setIsCvDropdownOpen(false)}
+                      >
+                        <FaDownload /> Full CV
+                      </a>
+                      <a
+                        href={cvPaths.accountant}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hero-cv-dropdown-item"
+                        onClick={() => setIsCvDropdownOpen(false)}
+                      >
+                        <FaDownload /> Accountant CV
+                      </a>
+                      <a
+                        href={cvPaths.webDeveloper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hero-cv-dropdown-item"
+                        onClick={() => setIsCvDropdownOpen(false)}
+                      >
+                        <FaDownload /> Web Developer CV
+                      </a>
+                      <a
+                        href={cvPaths.dataAnalyst}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hero-cv-dropdown-item"
+                        onClick={() => setIsCvDropdownOpen(false)}
+                      >
+                        <FaDownload /> Data Analyst CV
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-            <div className="hero-social-links" data-aos="fade-up" data-aos-delay="500">
-              <p className="social-label">Connect with me:</p>
-              <div className="social-icons">
-                {contact.socialLinks.linkedin && (
-                  <a href={contact.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link linkedin">
-                    <FaLinkedinIn />
-                  </a>
-                )}
-                {contact.socialLinks.github && (
-                  <a href={contact.socialLinks.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link github">
-                    <FaGithub />
-                  </a>
-                )}
-                {contact.socialLinks.whatsapp && (
-                  <a href={contact.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="social-link whatsapp">
-                    <FaWhatsapp />
-                  </a>
-                )}
-                {contact.socialLinks.twitter && (
-                  <a href={contact.socialLinks.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link twitter">
-                    <FaTwitter />
-                  </a>
-                )}
-                {contact.socialLinks.facebook && (
-                  <a href={contact.socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link facebook">
-                    <FaFacebookF />
-                  </a>
-                )}
+              {/* Social Links - Right Side */}
+              <div className="hero-social-links">
+                <p className="social-label">Connect with me:</p>
+                <div className="social-icons">
+                  {contact.socialLinks.linkedin && (
+                    <a href={contact.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link linkedin">
+                      <FaLinkedinIn />
+                    </a>
+                  )}
+                  {contact.socialLinks.github && (
+                    <a href={contact.socialLinks.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link github">
+                      <FaGithub />
+                    </a>
+                  )}
+                  {contact.socialLinks.whatsapp && (
+                    <a href={contact.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="social-link whatsapp">
+                      <FaWhatsapp />
+                    </a>
+                  )}
+                  {contact.socialLinks.twitter && (
+                    <a href={contact.socialLinks.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link twitter">
+                      <FaTwitter />
+                    </a>
+                  )}
+                  {contact.socialLinks.facebook && (
+                    <a href={contact.socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link facebook">
+                      <FaFacebookF />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
